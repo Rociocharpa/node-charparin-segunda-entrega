@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos en Tiempo Real</title>
+</head>
+<body>
+    <h1>Productos en Tiempo Real</h1>
+
+    <ul id="lista-productos">
+        {{#each productos}}
+            <li>{{this.nombre}}</li>
+        {{/each}}
+    </ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io(); // Conectar al servidor WebSocket
+
+        // Escucha evento y actualiza la lista
+        socket.on('nuevoProducto', (producto) => {
+            const lista = document.getElementById('lista-productos');
+            const nuevoElemento = document.createElement('li');
+            nuevoElemento.textContent = producto.nombre;
+            lista.appendChild(nuevoElemento);
+        });
+    </script>
+</body>
+</html>
